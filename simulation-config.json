@@ -1,0 +1,18 @@
+{
+  "startTime": 0,
+  "endTime": 100,
+  "reportProgress": true,
+  "liveLogInterval": 0,
+  "logVariables": {
+    "{simplecar}.simplecar": [
+          "speed",
+          "x"
+      ],
+    "{controller}.controller": [
+          "accdes"
+      ],
+    "{leadcar}.leadcar": [
+          "accel"
+      ]
+  }
+}

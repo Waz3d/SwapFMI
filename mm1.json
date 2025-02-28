@@ -1,0 +1,46 @@
+{
+  "fmus": {
+      "{simplecar}": "SimpleCar.fmu",
+      "{leadcar}": "LeadCar.fmu",
+      "{controller}": "CACC.fmu"
+  },
+  "connections": {
+      "{simplecar}.simplecar.speed": [
+          "{controller}.controller.speed_me"
+      ],
+      "{simplecar}.simplecar.x": [
+          "{controller}.controller.in_x"
+      ],
+      "{controller}.controller.accdes": [
+          "{simplecar}.simplecar.accel"
+      ],
+      "{leadcar}.leadcar.accel": [
+          "{controller}.controller.acc_leader",
+          "{controller}.controller.acc_prec"
+      ],
+      "{leadcar}.leadcar.speed": [
+          "{controller}.controller.speed_leader",
+          "{controller}.controller.speed_prec"
+      ],
+      "{leadcar}.leadcar.x": [
+          "{controller}.controller.in_x_leader",
+          "{controller}.controller.in_x_prec"
+      ]
+  },
+  "parameters": {
+      "{simplecar}.simplecar.v0": 5,
+      "{simplecar}.simplecar.x0": 25,
+      "{controller}.controller.targetDistance": 15,
+      "{leadcar}.leadcar.simple_car.x0": 40,
+      "{leadcar}.leadcar.simple_car.v0": 10
+  },
+  "algorithm": {
+    "type": "fixed-step",
+    "size": 0.1
+  },
+
+  "faultInjectConfigurationPath": "wt_fault.xml",
+  "faultInjectInstances": {
+    "controller": "id-A"
+  }
+}

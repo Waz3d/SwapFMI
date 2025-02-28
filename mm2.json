@@ -1,0 +1,77 @@
+{
+  "fmus": {
+    "{s}": "SimpleCar.fmu",
+    "{l}": "LeadCar.fmu",
+    "{c}": "CACC.fmu",
+    "{nc}": "NewController.fmu"
+  },
+  "connections": {
+    "{s}.simplecar.speed": [
+        "{c}.controller.speed_me"
+    ],
+    "{s}.simplecar.x": [
+        "{c}.controller.in_x"
+    ],
+    "{c}.controller.accdes": [
+        "{s}.simplecar.accel"
+    ],
+    "{l}.leadcar.accel": [
+        "{c}.controller.acc_leader",
+        "{c}.controller.acc_prec"
+    ],
+    "{l}.leadcar.speed": [
+        "{c}.controller.speed_leader",
+        "{c}.controller.speed_prec"
+    ],
+    "{l}.leadcar.x": [
+        "{c}.controller.in_x_leader",
+        "{c}.controller.in_x_prec"
+    ]
+  },
+  "parameters": {
+    "{s}.simplecar.v0": 5,
+    "{s}.simplecar.x0": 25,
+    "{c}.controller.targetDistance": 15,
+    "{l}.leadcar.simple_car.x0": 40,
+    "{l}.leadcar.simple_car.v0": 10
+  },
+  "algorithm": {
+    "type": "fixed-step",
+    "size": 0.1
+  },
+  "modelSwaps": {
+    "controller": {
+      "swapInstance": "newcont",
+      "stepCondition": "(true)",
+      "swapCondition": "(true)",
+      "swapConnections": {
+        "{nc}.newcont.acceleration": [
+          "{s}.simplecar.accel"
+        ],
+        "{s}.simplecar.speed": [
+          "{nc}.newcont.ego_velocity"
+        ],
+        "{s}.simplecar.x": [
+          "{nc}.newcont.ego_position"
+        ],
+        "{c}.controller.accdes": [
+          "{nc}.newcont.target_acceleration"
+        ],
+        "{l}.leadcar.accel": [
+          "{nc}.newcont.lead_acceleration"
+        ],
+        "{l}.leadcar.speed": [
+          "{nc}.newcont.lead_velocity"
+        ],
+        "{l}.leadcar.x": [
+          "{nc}.newcont.lead_position"
+        ]
+      }
+    }
+  },
+  "modelTransfers": {
+    "leadcar": "leadcar",
+    "simplecar": "simplecar",
+    "controller": "controller"
+  }
+}
